@@ -2,7 +2,6 @@
 #define MOTOR_H_
 
 #include <avr/io.h>
-#include <util/delay.h>
 #include <avr/interrupt.h>
 
 #define ROTATION_DELAY 5000

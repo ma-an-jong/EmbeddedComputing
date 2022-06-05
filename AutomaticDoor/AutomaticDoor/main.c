@@ -7,13 +7,39 @@
 volatile int count = 0;
 int state = 0;
 
+void INIT_BUTTON(void)
+{
+	DDRC = 0x00;
+	PORTC = 0x01;
+}
+
 void open(void)
 {
-	state = !state;
+	UART_printString("open\n");
+	_delay_ms(1);
 	OCR1A = PULSE_MIN;
 	count = 0;
-	
+	LCD_write_string("Welcome!!");
 }
+
+void check_button(void)
+{
+	if(!(PINC & 0x01))
+	{
+		if(!state)
+		{
+			state = !state;
+			open();
+		}
+		else
+		{
+			count = 0;
+		}
+	}
+}
+
+
+
 
 ISR(TIMER0_COMPA_vect)
 {
@@ -25,8 +51,10 @@ ISR(TIMER0_COMPA_vect)
 		{
 			count = 0;
 			UART_printString("close\n");
+			_delay_ms(1);
 			OCR1A = PULSE_MAX;
 			state = !state;
+			LCD_clear();
 		}
 	}
 	
@@ -43,38 +71,20 @@ void INIT_TIMER0(void)
 int main(void)
 {
 	
-    LCD_init();
+	LCD_init();
+	_delay_ms(100);
+	LCD_write_string("initialize...");
 	OCR1A = PULSE_MAX;
 	INIT_TIMER1();
 	INIT_TIMER0();
 	UART_INIT();
+	INIT_BUTTON();
+	_delay_ms(3000);
+	LCD_clear();
 	
-
-	
-// 	LCD_goto_XY(0,0);
-// 	LCD_write_data('1');
-// 	
-// 	LCD_goto_XY(0,5);
-// 	LCD_write_data('2');
-// 	
-// 	LCD_goto_XY(1,0);
-// 	LCD_write_data('3');
-// 	
-// 	LCD_goto_XY(1,5);
-// 	LCD_write_data('4');
-// 	
-
-	_delay_ms(1000);
-	open();
-	
-    while (1)
+	while (1)
 	{
-		LCD_write_string("HELLO WORLD!");
-		UART_printNumber(count);
-		UART_printString("\n");
-		_delay_ms(1000);
-		LCD_clear();
-		_delay_ms(1000);
+		check_button();
 	}
 }
 

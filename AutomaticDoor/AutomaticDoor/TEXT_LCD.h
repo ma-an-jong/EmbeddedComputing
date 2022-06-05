@@ -5,7 +5,6 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-
 #define PORT_DATA		PORTD
 #define PORT_CONTROL	PORTB
 #define DDR_DATA		DDRD

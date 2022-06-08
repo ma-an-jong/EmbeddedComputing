@@ -123,6 +123,12 @@
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MicroSensor.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MicroSensor.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Motor.c">
       <SubType>compile</SubType>
     </Compile>

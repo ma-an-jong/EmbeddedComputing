@@ -6,7 +6,7 @@
 
 #define ROTATION_DELAY 5000
 #define PULSE_MIN 1500
-#define PULSE_MAX 5300
+#define PULSE_MAX 5200
 #define FALSE_STATE 0;
 #define TRUE_STATE 1;
 
